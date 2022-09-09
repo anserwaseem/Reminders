@@ -1,4 +1,3 @@
-export default interface Reminder {
-  id: number;
-  title: string;
+export default class Reminder {
+  constructor(public readonly id: number, public title: string) {}
 }

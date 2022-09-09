@@ -1,0 +1,7 @@
+{
+  "short_name": "Reminders",
+  "name": "Reminders",
+  "start_url": "/",
+  "display": "standalone",
+  "scope": "/"
+}

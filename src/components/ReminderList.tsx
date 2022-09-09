@@ -4,9 +4,8 @@ import Reminder from "../models/Reminder";
 interface ReminderListProps {
   reminders: Reminder[];
   onRemoveReminder: (id: number) => void;
+  onEditReminder: (reminder: Reminder) => void;
 }
-
-
 
 function ReminderList(props: ReminderListProps) {
   return (
@@ -19,6 +18,14 @@ function ReminderList(props: ReminderListProps) {
             onClick={() => props.onRemoveReminder(reminder.id)}
           >
             Delete
+          </button>
+          <button
+            className="btn btn-outline-secondary"
+            onClick={() =>
+              props.onEditReminder(new Reminder(reminder.id, reminder.title))
+            }
+          >
+            Edit
           </button>
         </li>
       ))}

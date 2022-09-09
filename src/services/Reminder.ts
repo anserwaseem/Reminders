@@ -17,6 +17,18 @@ class ReminderService {
   async removeReminder(id: number) {
     return (await this.https.delete<Reminder>(`todos/${id}`)).data;
   }
+
+  async updateReminder(reminder: Reminder) {
+    try {
+      const response = await this.https.put<Reminder>(
+        `todos/${reminder.id}`,
+        reminder
+      );
+      return response.data;
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  }
 }
 
 export default new ReminderService();

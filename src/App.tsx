@@ -23,9 +23,21 @@ function App() {
 
   const addReminder = async (title: string) => {
     const newReminder = await ReminderService.addReminder(title);
-    newReminder.id =
-      Math.max(...reminders.map((reminder) => reminder.id), 1) + 1;
-    setReminders([newReminder, ...reminders]);
+    const newId = Math.max(...reminders.map((reminder) => reminder.id), 1) + 1;
+    setReminders([new Reminder(newId, newReminder.title), ...reminders]);
+    alert("Reminder added");
+  };
+
+  const updateReminder = async (reminder: Reminder) => {
+    // console.log(reminder);
+    const updatedReminder = await ReminderService.updateReminder(reminder);
+    // console.log(updatedReminder);
+    const remindersCopy = [...reminders];
+    remindersCopy[reminder.id].title = updatedReminder.title;
+    // var reminderToUpdate = reminders.filter((rem) => rem.id === reminder.id)[0];
+    // reminderToUpdate.title = reminder.title;
+
+    setReminders(remindersCopy);
   };
 
   return (
@@ -34,7 +46,11 @@ function App() {
         <h1>Reminders</h1>
       </header>
       <NewReminder onAddReminder={addReminder} />
-      <ReminderList reminders={reminders} onRemoveReminder={removeReminder} />
+      <ReminderList
+        reminders={reminders}
+        onRemoveReminder={removeReminder}
+        onEditReminder={updateReminder}
+      />
     </div>
   );
 }
