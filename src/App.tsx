@@ -29,9 +29,9 @@ function App() {
   };
 
   const updateReminder = async (reminder: Reminder) => {
-    // console.log(reminder);
+    console.log(reminder);
     const updatedReminder = await ReminderService.updateReminder(reminder);
-    // console.log(updatedReminder);
+    console.log(updatedReminder);
     const remindersCopy = [...reminders];
     remindersCopy[reminder.id].title = updatedReminder.title;
     // var reminderToUpdate = reminders.filter((rem) => rem.id === reminder.id)[0];
@@ -49,7 +49,7 @@ function App() {
       <ReminderList
         reminders={reminders}
         onRemoveReminder={removeReminder}
-        onEditReminder={updateReminder}
+        onUpdateReminder={updateReminder}
       />
     </div>
   );

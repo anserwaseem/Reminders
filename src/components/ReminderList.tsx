@@ -1,18 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import Reminder from "../models/Reminder";
 
 interface ReminderListProps {
   reminders: Reminder[];
   onRemoveReminder: (id: number) => void;
-  onEditReminder: (reminder: Reminder) => void;
+  onUpdateReminder: (reminder: Reminder) => void;
 }
 
+const onEditReminder = (
+  editedReminder: Reminder,
+  onUpdateReminder: (reminder: Reminder) => void
+) => {
+  onUpdateReminder(editedReminder);
+};
+
 function ReminderList(props: ReminderListProps) {
+  const [isEditable, setIsEditable] = useState(false);
+  const [editButtonName, setEditButtonName] = useState("Edit");
+
   return (
     <ul className="list-group">
       {props.reminders.map((reminder) => (
         <li key={reminder.id} className="list-group-item">
-          {reminder.title}
+          {!isEditable ? (
+            reminder.title
+          ) : (
+            <input
+              type="text"
+              value={reminder.title}
+              onChange={(e) =>
+                props.onUpdateReminder(
+                  new Reminder(reminder.id, e.target.value)
+                )
+              }
+            />
+          )}
           <button
             className="btn btn-outline-danger mx-2 rounded-pill"
             onClick={() => props.onRemoveReminder(reminder.id)}
@@ -21,11 +43,12 @@ function ReminderList(props: ReminderListProps) {
           </button>
           <button
             className="btn btn-outline-secondary"
-            onClick={() =>
-              props.onEditReminder(new Reminder(reminder.id, reminder.title))
-            }
+            onClick={() => {
+              setIsEditable(true);
+              setEditButtonName("Update");
+            }}
           >
-            Edit
+            {editButtonName}
           </button>
         </li>
       ))}
