@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 
-export default function NewReminder() {
+interface NewReminderProps {
+  onAddReminder(title: String): void;
+}
+
+export default function NewReminder(props: NewReminderProps) {
   const [title, setTitle] = useState("");
+
+  const submitReminder = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!title) return;
+    props.onAddReminder(title);
+    setTitle("");
+  };
+
   return (
-    <form>
+    <form onSubmit={submitReminder}>
       <label htmlFor="title">Title:</label>
       <input
         id="title"

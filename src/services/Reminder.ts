@@ -7,15 +7,15 @@ class ReminderService {
   });
 
   async getReminders() {
-    return await this.https.get("todos");
+    return (await this.https.get<Reminder[]>("todos")).data;
   }
 
-  async addReminder(reminder: Reminder) {
-    return await this.https.post("todos", reminder);
+  async addReminder(title: string) {
+    return (await this.https.post<Reminder>("todos", { title })).data;
   }
 
   async removeReminder(id: number) {
-    return await this.https.delete(`todos/${id}`);
+    return (await this.https.delete<Reminder>(`todos/${id}`)).data;
   }
 }
 
